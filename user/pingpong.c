@@ -2,6 +2,8 @@
 #include "kernel/stat.h"
 #include "user/user.h"
 
+#define MSGSIZE 16
+
 int main(int argc, char *argv[])
 {
     // pingpong
@@ -18,8 +20,27 @@ int main(int argc, char *argv[])
     int p[2];
     pipe(p);
     printf("pipe[0]: %d, pipe[1]: %d", p[0], p[1]);
+    char buf[MSGSIZE];
+    int f = fork();
+    if (f > 0)
+    {
+        printf("i am father");
+        write(p, "ping", MSGSIZE);
+        wait(NULL);
+        read(p[0], buf, MSGSIZE);
+        printf("father received %s from son\n", buf);
+        printf("<%d>: received pong");
+    }
+    else
+    {
+        printf("i am son");
+        read(p[0], buf, MSGSIZE);
+        printf("son received %s from father\n", buf);
+        printf("<%d>: received ping");
+        write(p, "poing", MSGSIZE);
+    }
     // if (fork() == 0)
-    // {
+    // {;
     //     close(0);
     //     read(0, p[0], sizeof p[0]);
     //     close(p[0]);
