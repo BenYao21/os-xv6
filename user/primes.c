@@ -21,7 +21,8 @@ int main(int argc, char *argv[])
             }
             else
             {
-                write(p[1], cur + 1, sizeof p[1]);
+                int nxt = cur + 1;
+                write(p[1], nxt, sizeof p[1]);
                 int fid = fork();
             }
         }
