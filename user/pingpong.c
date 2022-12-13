@@ -20,18 +20,18 @@ int main(int argc, char *argv[])
     int p[2];
     pipe(p);
     char buf[MSGSIZE];
-    int f = fork();
+    int f = fork(), id = getpid();
     if (f > 0)
     {
         write(p[1], "ping", MSGSIZE);
         wait(0);
         read(p[0], buf, MSGSIZE);
-        printf("<%d>: received pong\n");
+        printf("<%d>: received pong\n", id);
     }
     else
     {
         read(p[0], buf, MSGSIZE);
-        printf("<%d>: received ping\n");
+        printf("<%d>: received ping\n", id);
         write(p[1], "pong", MSGSIZE);
     }
     exit(0);
