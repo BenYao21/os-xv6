@@ -25,8 +25,8 @@ int main(int argc, char *argv[])
     if (f > 0)
     {
         printf("i am father");
-        write(p, "ping", MSGSIZE);
-        wait(NULL);
+        write(p[1], "ping", MSGSIZE);
+        wait(0);
         read(p[0], buf, MSGSIZE);
         printf("father received %s from son\n", buf);
         printf("<%d>: received pong");
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
         read(p[0], buf, MSGSIZE);
         printf("son received %s from father\n", buf);
         printf("<%d>: received ping");
-        write(p, "poing", MSGSIZE);
+        write(p[1], "pong", MSGSIZE);
     }
     // if (fork() == 0)
     // {;
