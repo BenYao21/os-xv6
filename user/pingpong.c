@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
      */
     int p[2];
     pipe(p);
-    printf("pipe[0]: %d, pipe[1]: %d", p[0], p[1]);
     char buf[MSGSIZE];
     int f = fork();
     if (f > 0)
@@ -27,28 +26,13 @@ int main(int argc, char *argv[])
         write(p[1], "ping", MSGSIZE);
         wait(0);
         read(p[0], buf, MSGSIZE);
-        printf("<%d>: received pong");
+        printf("<%d>: received pong\n");
     }
     else
     {
         read(p[0], buf, MSGSIZE);
-        printf("<%d>: received ping");
+        printf("<%d>: received ping\n");
         write(p[1], "pong", MSGSIZE);
     }
-    // if (fork() == 0)
-    // {;
-    //     close(0);
-    //     read(0, p[0], sizeof p[0]);
-    //     close(p[0]);
-    //     close(p[1]);
-    //     write(0,"/bin/wc", 6);
-    //     getpid()
-    // }
-    // else
-    // {
-    //     close(p[0]);
-    //     write(p[1], "pong\n", 12);
-    //     close(p[1]);
-    // }
     exit(0);
 }
