@@ -24,18 +24,14 @@ int main(int argc, char *argv[])
     int f = fork();
     if (f > 0)
     {
-        printf("i am father");
         write(p[1], "ping", MSGSIZE);
         wait(0);
         read(p[0], buf, MSGSIZE);
-        printf("father received %s from son\n", buf);
         printf("<%d>: received pong");
     }
     else
     {
-        printf("i am son");
         read(p[0], buf, MSGSIZE);
-        printf("son received %s from father\n", buf);
         printf("<%d>: received ping");
         write(p[1], "pong", MSGSIZE);
     }
