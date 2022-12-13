@@ -4,6 +4,27 @@
 
 int main(int argc, char *argv[])
 {
-
+    int p[2];
+    pipe(p);
+    for (int i = 2; i < 36; i++)
+    {
+        int cur = 2;
+        if (cur == i)
+        {
+            printf("prime %d", i);
+        }
+        else
+        {
+            if (i % cur == 0)
+            {
+                exit(0);
+            }
+            else
+            {
+                write(p[1], cur + 1, sizeof p[1]);
+                int fid = fork();
+            }
+        }
+    }
     exit(0);
 }

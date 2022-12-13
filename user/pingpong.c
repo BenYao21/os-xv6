@@ -23,17 +23,22 @@ int main(int argc, char *argv[])
     int f = fork(), id = getpid();
     if (f > 0)
     {
-        // p[0], write window; p[1], read window
+        // p[0], read window; p[1], write window
         write(p[1], "ping", MSGSIZE);
+        close(0);
+        close(p[1]);
         wait(0);
         read(p[0], buf, MSGSIZE);
+        close(p[1]);
         printf("<%d>: received pong\n", id);
     }
     else
     {
         read(p[0], buf, MSGSIZE);
+        close(p[0]);
         printf("<%d>: received ping\n", id);
         write(p[1], "pong", MSGSIZE);
+        close(p[1]);
     }
     exit(0);
 }
