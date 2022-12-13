@@ -33,11 +33,11 @@ void prime(int pipe_read, int pipe_write)
         val += raw;
     }
     int pid = fork();
-    if (pid > 0)
+    if (pid > 0) // child node
     {
         write(pipe_write, buf, MSGSIZE);
     }
-    if (pid == 0)
+    if (pid == 0) // grandchild node
     {
         prime(pipe_read, pipe_write);
     }
