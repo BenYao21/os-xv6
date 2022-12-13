@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     int f = fork(), id = getpid();
     if (f > 0)
     {
+        // p[0], write window; p[1], read window
         write(p[1], "ping", MSGSIZE);
         wait(0);
         read(p[0], buf, MSGSIZE);
