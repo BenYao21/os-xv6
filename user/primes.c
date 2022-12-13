@@ -48,7 +48,6 @@ int main(int argc, char *argv[])
     char nums[MSGSIZE];
     if (pid > 0)
     {
-        char nums[MSGSIZE];
         nums[0] = ZERO;
         nums[1] = ZERO;
         write(fd[1], nums, MSGSIZE);
