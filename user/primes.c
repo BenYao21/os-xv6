@@ -11,7 +11,7 @@ void prime(int pipe_read, int pipe_write)
     char buf[MSGSIZE];
     int val = 0;
     read(pipe_read, buf, MSGSIZE);
-    for (int i = 0; i < MSGSIZE; i++)
+    for (int i = 2; i < MSGSIZE; i++)
     {
         if (buf[i] == ONE)
         {
@@ -19,7 +19,11 @@ void prime(int pipe_read, int pipe_write)
             break;
         }
     }
-    printf("prime %d", val);
+    if (val == 0)
+    {
+        exit(0);
+    }
+    printf("prime %d\n", val);
     buf[val] = ZERO;
     int raw = val;
     val += raw;
@@ -43,14 +47,19 @@ int main(int argc, char *argv[])
 {
     int fd[2];
     pipe(fd);
-
-    int pid = fork();
     char nums[MSGSIZE];
+
+    for (int i = 2; i < MSGSIZE; i++)
+    {
+        nums[i] = ONE;
+    }
+    int pid = fork();
     if (pid > 0)
     {
         nums[0] = ZERO;
         nums[1] = ZERO;
         write(fd[1], nums, MSGSIZE);
+        wait(0);
     }
 
     if (pid == 0)
